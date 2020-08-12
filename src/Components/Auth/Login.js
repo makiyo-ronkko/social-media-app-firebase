@@ -7,8 +7,8 @@ class Login extends React.Component {
             email: null,
             password: null
         };
-        this.handleSubmission = this.handleSubmission.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleSubmission = this.handleSubmission.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange = e => {
@@ -18,7 +18,7 @@ class Login extends React.Component {
     }
     handleSubmission = e => {
         e.preventDefault();
-        console.log(this.state);
+        console.log(this.state);//this is an instance of Login object
     }
 
     render() {

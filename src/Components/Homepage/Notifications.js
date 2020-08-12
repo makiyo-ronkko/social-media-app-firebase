@@ -1,10 +1,10 @@
 import React from 'react';
-import PostSummary from '../Posts/PostSummary';
+//import PostSummary from '../Posts/PostSummary';
 
 const Notifications = () => {
     return (
         <div>
-            <PostSummary />
+            Notifications
         </div>
     );
 }
