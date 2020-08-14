@@ -1,24 +1,37 @@
 import React from 'react';
+import Firebase from 'firebase';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             email: null,
             password: null
         };
-        // this.handleSubmission = this.handleSubmission.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
-    }
 
-    handleChange = e => {
+        this.handleSubmission = this.handleSubmission.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange = (e) => {
+        // console.log(this);
         this.setState({
             [e.target.id]: e.target.value
         })
     }
-    handleSubmission = e => {
+
+    handleSubmission = (e) => {
         e.preventDefault();
         console.log(this.state);//this is an instance of Login object
+
+        Firebase.auth().signInWithEmailAndPassword(
+            this.state.email,
+            this.state.password
+        ).then(() => {
+            console.log('Login success');
+        }).catch(err => {
+            console.log('Login failed: ' + err)
+        });
     }
 
     render() {
@@ -36,10 +49,11 @@ class Login extends React.Component {
 
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="password" type="password" className="validate" placeholder="Password" />
-                                    <label htmlFor="password" onChange={this.handleChange} />
+                                    <input id="password" type="password" className="validate" onChange={this.handleChange} />
+                                    <label htmlFor="password">Password</label>
                                 </div>
                             </div>
+
                             <button className="btn waves-effect waves-light" type="submit" name="action">Submit</button>
                         </form>
                     </div>

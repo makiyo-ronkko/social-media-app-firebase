@@ -25,6 +25,12 @@ const Register = () => {
                                 <label for="email" />
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="input-field col s12">
+                                <input id="phone" type="emphoneail" className="validate" placeholder="Phone Number" />
+                                <label for="phone" />
+                            </div>
+                        </div>
 
                         <div className="row">
                             <div className="input-field col s12">

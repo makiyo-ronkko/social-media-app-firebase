@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NavigationBar from './Components/Homepage/NavigationBar';
-import Home from './Components/Homepage/Home';
+import NavigationBar from './Components/Layout/NavigationBar'
+import Feeds from './Components/Homepage/Feeds'
 import Register from './Components/Auth/Register';
 import Login from './Components/Auth/Login';
 import Logout from './Components/Auth/Logout';
@@ -35,7 +35,7 @@ function App() {
       <main>
         <Switch>
           Social Media Network
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={Feeds} />
           <Route path="/create" component={NewPost} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
