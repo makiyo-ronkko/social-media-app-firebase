@@ -14,8 +14,9 @@ class RegisteredUsers extends Component {
     render() {
         return (
             <div>
+                <li><NavLink to="/create">New Post</NavLink></li>
                 <li><NavLink to="/logout" onClick={this.logOut}>Logout</NavLink></li>
-            </div>
+            </div >
         )
     }
 }

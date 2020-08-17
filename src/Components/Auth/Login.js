@@ -7,7 +7,8 @@ class Login extends React.Component {
 
         this.state = {
             email: null,
-            password: null
+            password: null,
+            auth: null
         };
 
         this.handleSubmission = this.handleSubmission.bind(this);

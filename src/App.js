@@ -34,16 +34,22 @@ db.collection('posts').get()
 class App extends Component {
 
   state = {
-    uid: null
+    uid: Firebase.auth().currentUser
   };
 
   render() {
+
+    //const User = Firebase.auth().currentUser;
+
+    // Get the currently signed-in user 
+    // only executed when changes on user login status
     Firebase.auth().onAuthStateChanged(user => {
-      //debugger;
+      // user is now logged in, previous not
       if (user && this.state.uid === null) {
         this.setState({
           uid: user.uid
         })
+        // user is now logged in, and previous was
       } else if (!user && this.state.uid !== null) {
         this.setState({
           uid: null
@@ -58,11 +64,13 @@ class App extends Component {
           <Switch>
             Social Media Network
             {/* <Route path="/" exact component={Feeds} /> */}
-            <Route exactpath="/" render={() => { return <Feeds uid={this.state.uid} /> }} />
-            <Route path="/create" component={NewPost} />
+            <Route exact path="/" render={() => { return <Feeds uid={this.state.uid} /> }} />
+            <Route path="/create" render={() => { return <NewPost uid={this.state.uid} /> }} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
+            <Route exact path="/logout" render={() => {
+              return <Logout uid={this.state.uid} />
+            }}></Route>
             <Route path="/post/:id" component={PostDetails} />
           </Switch>
         </main>

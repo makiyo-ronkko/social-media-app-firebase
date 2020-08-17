@@ -1,16 +1,34 @@
-import React from "react";
+import React, { Component } from "react";
 import PostSummary from './PostSummary';
+import Firebase from 'firebase';
 
-const AllPosts = () => {
+class AllPosts extends Component {
+    state = { post: null }
 
-    return (
-        <div>
-            <PostSummary />
-            <PostSummary />
-            <PostSummary />
+    componentDidMount = () => {
+        Firebase.firestore().collection('posts').get()
+            .then(resp => {
+                this.setState({
+                    posts: resp.docs
+                })
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    }
 
-        </div>
-    );
+    render() {
+        return (
+            <div className="container" >
+                {
+                    this.state.posts ? this.state.posts.map(post =>
+                        <PostSummary post={post.data()} key={post.id} />) : 'Loading...'
+                }
+
+
+            </div>
+        );
+    }
 }
 
 

@@ -38,7 +38,7 @@ class Register extends Component {
                 console.log(resp.user.uid)
             })
         }).catch(err => {
-            console.log('Login failed: ' + err)
+            console.log('Register failed: ' + err)
         });
     }
 
