@@ -1,35 +1,60 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import PostSummary from './PostSummary';
-import Firebase from 'firebase';
+import { removePosts } from '../../store/actions/postActions';
+import { connect } from 'react-redux';
 
 class AllPosts extends Component {
-    state = { post: null }
+  // state = { post: null }
 
-    componentDidMount = () => {
-        Firebase.firestore().collection('posts').get()
-            .then(resp => {
-                this.setState({
-                    posts: resp.docs
-                })
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
-    }
+  // componentDidMount = () => {
+  //     Firebase.firestore().collection('posts').get()
+  //         .then(resp => {
+  //             this.setState({
+  //                 posts: resp.docs
+  //             })
+  //         })
+  //         .catch(err => {
+  //             console.log(err.message);
+  //         });
+  // }
 
-    render() {
-        return (
-            <div className="container" >
-                {
-                    this.state.posts ? this.state.posts.map(post =>
-                        <PostSummary post={post.data()} key={post.id} />) : 'Loading...'
-                }
+  render() {
+    console.log('Received a state from reducer');
+    console.log(this.props.posts);
 
-
-            </div>
-        );
-    }
+    return (
+      <div className='container'>
+        <button className='btn' onClick={this.props.removePost}>
+          Remove all posts
+        </button>
+        {this.props.posts.length > 0
+          ? this.props.posts.map((post) => (
+              <PostSummary post={post} key={Math.random() * 99} />
+            ))
+          : 'Loading...'}
+      </div>
+      // <div className="container" >
+      //     {
+      //         this.state.posts ? this.state.posts.map(post =>
+      //             <PostSummary post={post.data()} key={post.id} />) : 'Loading...'
+      //     }
+      // </div>
+    );
+  }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts, //[]
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removePost: () => {
+      // dispatch({ type: 'REMOVE_ALL_POST' });
+      dispatch(removePosts());
+    },
+  };
+};
 
-export default AllPosts;
+export default connect(mapStateToProps, mapDispatchToProps)(AllPosts);
