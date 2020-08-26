@@ -20,7 +20,7 @@ const store = createStore(
   reducers,
   compose(
     applyMiddleware(
-      reduxThunk.withExtraArgument({ getFirestore, getFirebase })
+      reduxThunk.withExtraArgument({ getFirestore, getFirebase })//call storeemhancer
     ), // new
     reduxFirestore(firebase, firebaseConfig) // new
   )

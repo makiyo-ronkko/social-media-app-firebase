@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 import PostSummary from './PostSummary';
-import { removePosts } from '../../store/actions/postActions';
+import { removePosts, fetchPosts } from '../../store/actions/postActions';
 import { connect } from 'react-redux';
+import Firebase from 'firebase';
 
 class AllPosts extends Component {
-  // state = { post: null }
+  //state = { post: null }
 
   // componentDidMount = () => {
-  //     Firebase.firestore().collection('posts').get()
-  //         .then(resp => {
-  //             this.setState({
-  //                 posts: resp.docs
-  //             })
-  //         })
-  //         .catch(err => {
-  //             console.log(err.message);
-  //         });
+  //   Firebase.firestore().collection('posts').get()
+  //     .then(resp => {
+  //       this.setState({
+  //         posts: resp.docs
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err.message);
+  //     });
   // }
+
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
 
   render() {
     console.log('Received a state from reducer');
@@ -29,8 +34,8 @@ class AllPosts extends Component {
         </button>
         {this.props.posts.length > 0
           ? this.props.posts.map((post) => (
-              <PostSummary post={post} key={Math.random() * 99} />
-            ))
+            <PostSummary post={post} key={Math.random() * 99} />
+          ))
           : 'Loading...'}
       </div>
       // <div className="container" >
@@ -54,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
       // dispatch({ type: 'REMOVE_ALL_POST' });
       dispatch(removePosts());
     },
+    fetchPosts: () => {
+      dispatch(fetch());
+    }
   };
 };
 

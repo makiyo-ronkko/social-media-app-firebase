@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { logout } from '../../store/actions/authActions';
+import { connect } from 'react-redux';
 
 class Logout extends Component {
 
@@ -10,13 +12,20 @@ class Logout extends Component {
     //         console.log('Logout failed: ' + err)
     //     });
     // }
+    componentDidMount = () => {
+        this.props.logout();
+    }
     render() {
         return (
             <div className="container">
-                {
+                {/* {
                     this.props.uid ?
                         <p>Something is wrong </p> :
                         <p>You have been logged out</p>
+                } */}
+                {this.props.loginState ?
+                    <div>Logout failed</div> :
+                    <div>Logout success</div>
                 }
             </div>
         );
@@ -24,4 +33,18 @@ class Logout extends Component {
 
 }
 
-export default Logout;
+const mapStateToProps = state => {
+    return {
+        loginStatus: !state.firebase.auth.isEmpty
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => {
+            dispatch(logout());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

@@ -1,3 +1,5 @@
+import { firebaseReducer } from 'react-redux-firebase';
+import { combineReducers } from 'redux';
 const currentTime = new Date();
 
 const initialState = {
@@ -13,12 +15,43 @@ const initialState = {
   ],
   userData: {},
   userActionErr: null,
+  loginStatus: false
 };
 
-const rootReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   //console.log('Current state is: ');
   //console.log(state); // current state
 
+  switch (action.type) {
+    case 'LOGIN_ERROR':
+      return {
+        ...state,
+        userActionErr: action.error.code
+      }
+    case 'LOGIN_SUCCESS':
+      console.log('Login success, state not changed');
+      return {
+        ...state,
+        loginStatus: true
+      }
+    default:
+      return state;
+  }
+}
+// switch (action.type) {
+//     case 'CREATE_POST_SUCCESSFUL':
+//         console.log('Post created');
+//         return state;
+//     case 'CREATE_POST_ERROR':
+//         console.log('Post creation failed', action.err.message);
+//         return state;
+//     default:
+//         return state
+// }
+
+const postReducer = (state = initialState, action) => {
+  //console.log('Current state is: ');
+  //console.log(state); // current state
   switch (action.type) {
     case 'CREATE_NEW_POST':
       console.log('A new post has been added');
@@ -40,19 +73,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         posts: [],
       };
+    case 'ALL_PSOTS':
+      return {
+        ...state
+      };
     default:
       return state;
   }
-  // switch (action.type) {
-  //     case 'CREATE_POST_SUCCESSFUL':
-  //         console.log('Post created');
-  //         return state;
-  //     case 'CREATE_POST_ERROR':
-  //         console.log('Post creation failed', action.err.message);
-  //         return state;
-  //     default:
-  //         return state
-  // }
 };
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  post: postReducer,
+  firebase: firebaseReducer
+})
 
 export default rootReducer;

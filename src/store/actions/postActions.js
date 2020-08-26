@@ -38,3 +38,13 @@ export const createPost = function (post) {
 export const removePosts = () => {
   return { type: 'REMOVE_ALL_POST' };
 };
+
+export const fetchPosts = (dispatch) => {
+  Firebase.firestore().collection('posts').get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        console.log(doc.data())
+        dispatch({ type: 'ALL_POSTS' });
+      });
+    })
+};
