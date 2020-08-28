@@ -9,8 +9,8 @@ class Login extends React.Component {
 
     this.state = {
       email: null,
-      password: null,
-      auth: null,
+      password: null
+      // auth: null,
     };
 
     this.handleSubmission = this.handleSubmission.bind(this);
@@ -42,7 +42,7 @@ class Login extends React.Component {
     return (
       <div className='row'>
         <div className='col s12 m6'>
-          <div className='container'>
+          <div className='container center-align'>
 
             {this.props.loginStatus ? <div>You are now logged in</div> :
               <form className='col s12' onSubmit={this.handleSubmission}>
@@ -65,9 +65,10 @@ class Login extends React.Component {
                       id='password'
                       type='password'
                       className='validate'
+                      placeholder='Password'
                       onChange={this.handleChange}
                     />
-                    <label htmlFor='password'>Password</label>
+                    <label htmlFor='password' />
                   </div>
                 </div>
 

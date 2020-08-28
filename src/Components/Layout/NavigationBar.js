@@ -8,13 +8,13 @@ class NavigationBar extends Component {
         return (
             <nav className="nav-wrapper" >
                 <div className="container">
-                    <Logo></Logo>
+                    <Logo />
                     {
                         this.props.uid ?
-                            <ul className="right hide-on-med-and-down">
+                            <ul className="right">
                                 <RegisteredUsers></RegisteredUsers>
                             </ul> :
-                            <ul className="right hide-on-med-and-down">
+                            <ul className="right">
                                 <NonRegisteredUsers></NonRegisteredUsers>
                             </ul>
                     }

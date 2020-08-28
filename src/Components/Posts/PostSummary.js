@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class PostSummary extends Component {
     render() {
@@ -10,8 +11,8 @@ class PostSummary extends Component {
                         {/* <div className="card-title" style={{ margin: '20px 0 0 20px' }}>{props.post.title}</div> */}
                         <div className="card-content">
                             <p>{this.props.post.content}</p>
-                            {/* <p>{props.post.content}</p>
-                        <p>{props.post.time.toString()}</p> */}
+                            <p>{this.props.post.id}</p>
+                            <Link to="/post/:id"></Link>
                         </div>
                     </div>
                 </div>

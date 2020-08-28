@@ -1,7 +1,7 @@
 import React from "react";
 
 const PostDetails = () => {
-
+    //this.props.match.id
     return (
         <div className="container">
             <div className="card">

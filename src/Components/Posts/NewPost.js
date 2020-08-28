@@ -42,7 +42,7 @@ class NewPost extends Component {
     return (
       <div className='row'>
         <div className='col s12 m6'>
-          <div className='container'>
+          <div className='container center-align'>
             {/* {this.state.posted ? <Redirect to='/' /> : ''}
             {!this.props.uid ? (
               <Redirect to='/login' />
@@ -99,7 +99,7 @@ class NewPost extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     // createPost on handleSubmission
-    createPost: (post) => dispatch(createPost(post)), // createPost
+    createPost: (post) => dispatch(createPost(post)) // createPost
     // return dispatch({
     //     type: 'CREATE_NEW_POST',
     //     post: post

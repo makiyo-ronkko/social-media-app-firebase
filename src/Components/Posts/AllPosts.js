@@ -3,6 +3,8 @@ import PostSummary from './PostSummary';
 import { removePosts, fetchPosts } from '../../store/actions/postActions';
 import { connect } from 'react-redux';
 import Firebase from 'firebase';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 class AllPosts extends Component {
   //state = { post: null }
@@ -19,7 +21,7 @@ class AllPosts extends Component {
   //     });
   // }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.fetchPosts();
   }
 
@@ -33,8 +35,8 @@ class AllPosts extends Component {
           Remove all posts
         </button>
         {this.props.posts.length > 0
-          ? this.props.posts.map((post) => (
-            <PostSummary post={post} key={Math.random() * 99} />
+          ? this.props.posts.map((post) => ( // posts = state.post.posts = resp.docs + .data()
+            <PostSummary post={post.data()} key={Math.random() * 99} />
           ))
           : 'Loading...'}
       </div>
@@ -50,7 +52,8 @@ class AllPosts extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts, //[]
+    // posts: state.posts, //[]
+    posts: state.post.posts, //[]
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -60,7 +63,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(removePosts());
     },
     fetchPosts: () => {
-      dispatch(fetch());
+      dispatch(fetchPosts());
     }
   };
 };

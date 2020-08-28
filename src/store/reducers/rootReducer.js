@@ -1,6 +1,6 @@
 import { firebaseReducer } from 'react-redux-firebase';
 import { combineReducers } from 'redux';
-const currentTime = new Date();
+//const currentTime = new Date();
 
 const initialState = {
   posts: [
@@ -53,6 +53,11 @@ const postReducer = (state = initialState, action) => {
   //console.log('Current state is: ');
   //console.log(state); // current state
   switch (action.type) {
+    case 'FETCHED_POSTS_SUCCESS':
+      return {
+        ...state,
+        posts: action.payload
+      }
     case 'CREATE_NEW_POST':
       console.log('A new post has been added');
       return {
@@ -72,10 +77,6 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [],
-      };
-    case 'ALL_PSOTS':
-      return {
-        ...state
       };
     default:
       return state;

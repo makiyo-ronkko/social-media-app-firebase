@@ -1,5 +1,4 @@
-import Firebase from 'firebase';
-
+//import Firebase from 'firebase';
 //const db = Firebase.firestore();
 
 export const createPost = function (post) {
@@ -39,12 +38,23 @@ export const removePosts = () => {
   return { type: 'REMOVE_ALL_POST' };
 };
 
-export const fetchPosts = (dispatch) => {
-  Firebase.firestore().collection('posts').get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        console.log(doc.data())
-        dispatch({ type: 'ALL_POSTS' });
+export const fetchPosts = () => {
+  return (dispatch, getState, storeEnhancers) => {
+    storeEnhancers
+      .getFirestore()
+      .collection('posts')
+      .get()
+      .then(resp => {
+        dispatch({
+          type: 'FETCHED_POSTS_SUCCESS',
+          payload: resp.docs
+        })
+      })
+      .catch(err => {
+        dispatch({
+          type: 'FETCHED_POSTS_FAIL',
+          err: err
+        })
       });
-    })
+  };
 };
