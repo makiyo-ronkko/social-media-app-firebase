@@ -21,9 +21,9 @@ class AllPosts extends Component {
   //     });
   // }
 
-  componentDidMount = () => {
-    this.props.fetchPosts();
-  }
+  // componentDidMount = () => {
+  //   this.props.fetchPosts();
+  // }
 
   render() {
     console.log('Received a state from reducer');
@@ -34,9 +34,10 @@ class AllPosts extends Component {
         <button className='btn' onClick={this.props.removePost}>
           Remove all posts
         </button>
-        {this.props.posts.length > 0
-          ? this.props.posts.map((post) => ( // posts = state.post.posts = resp.docs + .data()
-            <PostSummary post={post.data()} key={Math.random() * 99} />
+        {this.props.posts //Object.keys returns Object to array
+          ? Object.keys(this.props.posts).map((postId, index) => ( // posts = state.post.posts = resp.docs + .data()
+            // <PostSummary post={post.data()} key={Math.random() * 99} />
+            <PostSummary post={this.props.posts[postId]} postId={postId} key={index} />
           ))
           : 'Loading...'}
       </div>
@@ -51,10 +52,16 @@ class AllPosts extends Component {
 }
 
 const mapStateToProps = (state) => {
+  // return {
+  //   // posts: state.posts, //[]
+  //   posts: state.post.posts, //[]
+  // };
+  // if (state.firestore.data.posts) {
+  // debugger;
   return {
-    // posts: state.posts, //[]
-    posts: state.post.posts, //[]
-  };
+    posts: state.firestore.data.posts
+  }
+  // }
 };
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -68,4 +75,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllPosts);
+export default compose(
+  firestoreConnect(() => ['posts']),
+  connect(mapStateToProps, mapDispatchToProps)
+)(AllPosts);

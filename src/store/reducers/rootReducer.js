@@ -1,4 +1,5 @@
 import { firebaseReducer } from 'react-redux-firebase';
+import { firestoreReducer } from 'redux-firestore';
 import { combineReducers } from 'redux';
 //const currentTime = new Date();
 
@@ -15,7 +16,8 @@ const initialState = {
   ],
   userData: {},
   userActionErr: null,
-  loginStatus: false
+  loginStatus: false,
+  notifications: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -78,6 +80,14 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: [],
       };
+    case 'POST_ADDITION_OBSERVED':
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          action.payload
+        ]
+      }
     default:
       return state;
   }
@@ -86,7 +96,8 @@ const postReducer = (state = initialState, action) => {
 const rootReducer = combineReducers({
   auth: authReducer,
   post: postReducer,
-  firebase: firebaseReducer
+  firebase: firebaseReducer, //firebase authentication
+  firestore: firestoreReducer // firestore database
 })
 
 export default rootReducer;
